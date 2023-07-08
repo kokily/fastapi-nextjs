@@ -1,7 +1,15 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from "next/image";
+import styles from "./page.module.css";
 
-export default function Home() {
+async function getData() {
+  const response = await fetch("http://localhost:8000/api/python");
+
+  return response.json();
+}
+
+export default async function Home() {
+  const data = await getData();
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -15,15 +23,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
+            {JSON.stringify(data)}
           </a>
         </div>
       </div>
@@ -91,5 +91,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
